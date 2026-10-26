@@ -36,26 +36,41 @@ we would obtain a useless embedding. Give an example of a simple graph and corre
 \textbf{Hint:} Your graph should be non-trivial, i.e., it should include at least two nodes and at least one edge. Assume the embeddings are in 2 dimensions, i.e., $k = 2$.
 What happens if $\boldsymbol{\ell} = \textbf{0}$?
 
-\Solution{}
+\Solution{
+    \\
+    Assume a graph with 2 node and 1 edge, where $\mathbf{h}_a=\mathbf{h}_b =[1,0]^\top,\enspace \boldsymbol{\ell}=\mathbf{0}$.
+}
 
-\subsection{Utility of $\gamma$  [5 points]}
+\subsection{Utility of $\gamma$ [5 points]}
 We are interested in understanding what the margin term $\gamma$ accomplishes. If we removed the margin term $\gamma$ from our loss, and instead optimized
 \begin{equation}\label{eq3}
 \mathcal{L}_{\text {no margin }}=\sum_{(h, \ell, t) \in S} \sum_{\left(h^{\prime}, \ell, t^{\prime}\right) \in S_{(h, \ell, t)}^{\prime}}\left[d(\mathbf{h}+\boldsymbol{\ell}, \mathbf{t})-d\left(\mathbf{h}^{\prime}+\boldsymbol{\ell}, \mathbf{t}^{\prime}\right)\right]_{+},
 \end{equation}
 it turns out that we would again obtain a useless embedding. Give an example of a simple graph and corresponding embeddings which will minimize the new objective function (\ref{eq3}) all the way to zero, but still give a completely useless embedding. By useless, we mean that in your example, you cannot tell just from the embeddings whether two nodes are linked by a particular relation (Note: your graph should be non-trivial, i.e., it should include at least two nodes and at least one edge. Assume the embeddings are in 2 dimensions, i.e., $k=2$.)
 
-\Solution{}
+\Solution{
+    
+}
 
 \subsection{ Normalizing the embeddings [5 points]}
 Recall that TransE normalizes every entity embedding to have unit length (see line 5 of the algorithm). The quality of our embeddings would be much worse if we did not have this step. To understand why, imagine running the algorithm with line 5 omitted.
 What could the algorithm do to trivially minimize the loss in this case? What would the embeddings
 it generates look like?
 
-\Solution{}
+\Solution{
+    \\
+    When the embeddings satisfy $d(\mathbf{h}+\boldsymbol{\ell}, \mathbf{t})-d\left(\mathbf{h}^{\prime}+\boldsymbol{\ell}, \mathbf{t}^{\prime}\right)<0$, the algorithm could infinitely scale up them to make the objective function to 0 and have no sense for the actual embedding structure.
+}
 
 \subsection{Expressiveness of TransE embeddings [8 points]}
 Give an example of a simple graph for which no perfect embedding exists, i.e., no embedding perfectly satisfies $\mathbf{u}+\boldsymbol{\ell}=\mathbf{v}$ for all $(u, \ell, v) \in S$ and $\mathbf{u}+\boldsymbol{\ell} \neq \mathbf{v}$ for $(u, \ell, v) \notin S$, for any choice of entity embeddings ($\mathbf{e}$ for $e \in E$ ) and relationship embeddings ( $\boldsymbol{\ell}$ for $\ell \in L$ ). Explain why this graph has no perfect embedding in this system, and what that means about the expressiveness of TransE embeddings. As before, assume the embeddings are in 2 dimensions $(k=2)$.\\
 \textbf{Hint: }Note that the condition for this question is slightly different from that for Question 2.1 and what we ask you to answer is different as well.
 
-\Solution{}
+\Solution{
+    \\
+    Consider a graph with two entities \(A,B\) and one relation \(\ell\), where \(S=\{(A,\ell,A),(A,\ell,B)\}\), but \((B,\ell,A)\notin S\).
+
+A perfect TransE embedding must satisfy \(\mathbf a+\boldsymbol\ell=\mathbf a\) and \(\mathbf a+\boldsymbol\ell=\mathbf b\). The first equation implies \(\boldsymbol\ell=\mathbf0\), and the second implies \(\mathbf a=\mathbf b\). Consequently, \(\mathbf b+\boldsymbol\ell=\mathbf a\), incorrectly satisfying the triple \((B,\ell,A)\notin S\).
+
+Therefore, no perfect TransE embedding exists for this graph. This demonstrates that TransE has limited expressiveness and cannot represent all possible relational structures.
+}

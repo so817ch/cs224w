@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2026.7.29)  22 OCT 2026 13:50
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2026.7.29)  25 OCT 2026 17:26
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -563,12 +563,8 @@ Package hyperref Info: Link coloring ON on input line 39.
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
 LaTeX Font Info:    Trying to load font information for U+msa on input line 42.
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 42.
@@ -578,21 +574,27 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 LaTeX Warning: No \author given.
 
-(./problems/gnn-expressivity.tex [1
-
-]
-File: assets/expressivity-graphs.png Graphic file (type bmp)
-<assets/expressivity-graphs.png>
- [2]
-
-LaTeX Warning: Reference `probelm:eig' on page 3 undefined on input line 72.
-
-) (./problems/transE-embeddings.tex
-Underfull \hbox (badness 10000) in paragraph at lines 4--5
+(./problems/gnn-expressivity.tex
+Underfull \hbox (badness 10000) in paragraph at lines 18--18
 
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 26--26
+
+ []
+
+[1
+
+] [2]
+File: assets/expressivity-graphs.png Graphic file (type bmp)
+<assets/expressivity-graphs.png>
+ [3]) (./problems/transE-embeddings.tex
+Underfull \hbox (badness 10000) in paragraph at lines 4--5
+
+ []
+
+[4]
 Underfull \hbox (badness 1742) in paragraph at lines 7--7
 [][][]\TU/lmr/m/n/8 See the 2013 NeurIPS paper by Bordes et al: [][]$[][][][][] [] [] [] [][][][][][] [] [][][][] [] [][] [] [][][][][] []
  []
@@ -607,59 +609,51 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--14
 
  []
 
-[3]
 File: assets/algo2.png Graphic file (type bmp)
 <assets/algo2.png>
- [4]
+[5]
 
-LaTeX Warning: Reference `eq1' on page 5 undefined on input line 30.
-
-
-LaTeX Warning: Reference `eq2' on page 5 undefined on input line 35.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 44.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 41.
+(hyperref)                removing `\gamma' on input line 44.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\gamma' on input line 41.
+(hyperref)                removing `math shift' on input line 44.
 
+[6]
+Overfull \hbox (43.32939pt too wide) in paragraph at lines 76--76
+\TU/lmr/m/n/10 Consider a graph with two entities $\OML/cmm/m/it/10 A; B$ \TU/lmr/m/n/10 and one relation $\OML/cmm/m/it/10 `$\TU/lmr/m/n/10 , where $\OML/cmm/m/it/10 S \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 A; `; A\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 A; `; B\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 g$\TU/lmr/m/n/10 ,
+ []
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 41.
+) (./problems/kg-expressiveness.tex [7]
+Underfull \hbox (badness 10000) in paragraph at lines 20--20
 
+ []
 
-LaTeX Warning: Reference `eq3' on page 5 undefined on input line 46.
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 32--32
 
-[5]) (./problems/kg-expressiveness.tex [6]) [7] (./main.aux)
+ []
+
+) [9] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  A1182E2D6D234BCDE1340E278C6994E4;3627.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: A1182E2D6D234BCDE1340E278C6994E4;3627.
  ) 
 Here is how much of TeX's memory you used:
  21386 strings out of 474878
- 396144 string characters out of 5762516
- 1931627 words of memory out of 5000000
- 43010 multiletter control sequences out of 15000+600000
- 568618 words of font info for 95 fonts, out of 8000000 for 9000
+ 396074 string characters out of 5762516
+ 1932627 words of memory out of 5000000
+ 43014 multiletter control sequences out of 15000+600000
+ 568602 words of font info for 93 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 84i,10n,93p,721b,400s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,13n,93p,721b,359s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (7 pages).
+Output written on main.pdf (9 pages).

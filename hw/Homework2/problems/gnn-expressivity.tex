@@ -13,14 +13,16 @@ Consider the update for Graph Isomorphism Network (GIN):
 where $\mathbf{x}_v^{(l)}\in\mathbb{R}^{d_l}$ is the embedding of node $v$ at layer $l$. Let $\mathbf{X}^{(l)}\in\mathbb{R}^{N\times d_l}$ be a matrix containing the embeddings of all the nodes in the graph, i.e., $\mathbf{X}^{(l)}[v,:]=\mathbf{x}_v^{(l)\top}$. Also, let $\mathbf{A}\in\{0,1\}^{N\times N}$ represent the adjacency matrix of the graph. Write down the update of $\mathbf{X}^{(l+1)}$ as a function of $\mathbf{X}^{(l)}$ and $\mathbf{A}$.
 
 \Solution{
-
+    \\
+    $$\textbf{X}^{(l+1)} = \texttt{MLP} \left(\left(\textbf{A}+(1+\epsilon)\textbf{I}\right) \textbf{X}^{(l)}\right)$$
 }
 
 \subsection{Single Layer MLP [2 points]}
 Assume that $\texttt{MLP}\left(\right)$ represents a single layer MLP with no bias term followed by a pointwise nonlinearity~$\sigma$. Write down the update of $\mathbf{X}^{(l+1)}$ as a function of $\mathbf{X}^{(l)}$ and $\mathbf{A}$, and the trainable parameters $\mathbf{W}^{(l)}$ of layer $l$.
 
 \Solution{
-
+    \\
+    $$\textbf{X}^{(l+1)} = \sigma \left(\left(\textbf{A}+(1+\epsilon)\textbf{I}\right) \textbf{X}^{(l)} \textbf{W}^{(l)}\right)$$
 }
 
 \subsection{Eigenvector Extension [4 points]}\label{probelm:eig}
@@ -43,18 +45,39 @@ Next, show that each feature across all nodes, $\mathbf{X}^{(l+1)}[:,i]$, can be
 
 
 \Solution{
+    \begin{align*}
+        \textbf{X}^{(l+1)} &= \sigma \left(\left(\textbf{A}+(1+\epsilon)\textbf{I}\right) \textbf{X}^{(l)} \textbf{W}^{(l)}\right)\\
+        &= \sigma \left(\mathbf{V}\left(\mathbf{\Lambda}+(1+\epsilon)\textbf{I}\right) \mathbf{V}^\top\mathbf{X}^{(l)} \textbf{W}^{(l)}\right)
+    \end{align*}
+    set $$\hat{\mathbf{W}}^{(l)} = \left(\mathbf{\Lambda}+(1+\epsilon)\textbf{I}\right) \mathbf{V}^\top\mathbf{X}^{(l)} \textbf{W}^{(l)}$$, so
 
+    \begin{align*}
+        \hat{\mathbf{W}}^{(l)}[n,j] &= \left(\mathbf{\Lambda}+(1+\epsilon)\textbf{I}\right)[n,n] \left(\mathbf{V}^\top\mathbf{X}^{(l)} \textbf{W}^{(l)}\right)[n,j]\\
+        &= (\lambda_n+1+\epsilon) \sum_{i=1}^{d_l} \left(\mathbf{V}^\top\mathbf{X}^{(l)}\right)[n,i] \mathbf{W}^{(l)}[i,j]\\
+        &= (\lambda_n+1+\epsilon) \sum_{i=1}^{d_l} \mathbf{W}^{(l)}[i,j] \big\langle \mathbf{v}_n,\;\mathbf{X}^{(l)}[:,i]\big\rangle
+    \end{align*}
+
+    $$\mathbf{X}^{(l+1)}[:,j] =\sigma\left(\mathbf{V} \hat{\mathbf{W}}^{(l)}\right)[:,j] = \sigma\left(\sum_{n=1}^{N}\hat{\mathbf{W}}^{(l)}[n,j] \mathbf{v}_n\right)$$
 }
 
 \subsection{GraphSAGE [4 points]}
 Perform the same analysis for the GraphSAGE update when the aggregation function is sum pooling. \emph{i.e.}, derive (i)  $\mathbf{X}^{(l+1)}$ and (ii) $\hat{\mathbf{W}}^{(l)}[n,j]$. Recall that the GraphSAGE update function is
 \begin{align*}
     \mathbf{x}_v^{(l+1)} &= \sigma \left(\mathbf{W}^{(l)} \cdot \mathrm{CONCAT}\left(\mathbf{x}_v^{(l)}, \mathbf{x}_{N(v)}^{(l)}\right) \right) \\
-    &= \sigma \left(\mathbf{W}_1^{(l)} \mathbf{x}_v^{(l)} + \mathbf{W}_2^{(l)} \mathrm{AGG}\left(\mathbf{x}_u^{(l)}, \forall u \in N(v))\right) \right)
+    &= \sigma \left(\mathbf{W}_1^{(l)} \mathbf{x}_v^{(l)} + \mathbf{W}_2^{(l)} \mathrm{AGG}\left(\mathbf{x}_u^{(l)}, \forall u \in N(v)\right) \right)
 \end{align*}
 
 \Solution{
-
+    \begin{align*}
+        \mathbf{X}^{(l+1)} &= \sigma \left(\mathbf{X}^{(l)} \mathbf{W}_1^{(l)} + \mathbf{A}\mathbf{X}^{(l)} \mathbf{W}_2^{(l)}\right)\\
+        &= \sigma \left(\mathbf{V}\left(\mathbf{V}^\top\mathbf{X}^{(l)} \mathbf{W}_1^{(l)} + \mathbf{\Lambda}\mathbf{V}^\top\mathbf{X}^{(l)} \mathbf{W}_2^{(l)}\right)\right)
+    \end{align*}
+    set $$\hat{\mathbf{W}}^{(l)} = \mathbf{V}^\top\mathbf{X}^{(l)} \mathbf{W}_1^{(l)} + \mathbf{\Lambda}\mathbf{V}^\top\mathbf{X}^{(l)} \mathbf{W}_2^{(l)}$$
+    \begin{align*}
+        \hat{\mathbf{W}}^{(l)}[n,j] &= \left(\mathbf{V}^\top\mathbf{X}^{(l)} \mathbf{W}_1^{(l)}\right)[n,j] + \mathbf{\Lambda}[n,n] \left(\mathbf{V}^\top\mathbf{X}^{(l)} \mathbf{W}_2^{(l)}\right)[n,j]\\
+        &=\sum_{i=1}^{d_l} \left(\mathbf{V}^\top\mathbf{X}^{(l)}\right)[n,i] \mathbf{W}_1^{(l)}[i,j] + \lambda_n \sum_{i=1}^{d_l} \left(\mathbf{V}^\top\mathbf{X}^{(l)}\right)[n,i] \mathbf{W}_2^{(l)}[i,j]\\
+        &= \sum_{i=1}^{d_l} \mathbf{W}_1^{(l)}[i,j] \big\langle \mathbf{v}_n,\;\mathbf{X}^{(l)}[:,i]\big\rangle + \lambda_n \sum_{i=1}^{d_l} \mathbf{W}_2^{(l)}[i,j] \big\langle \mathbf{v}_n,\;\mathbf{X}^{(l)}[:,i]\big\rangle 
+    \end{align*}
 }
 
 \subsection{Eigendecomposition Analysis [8 points]}
@@ -66,13 +89,21 @@ Perform the same analysis for the GraphSAGE update when the aggregation function
 For graphs $\mathcal{G}$ and $\hat{\mathcal{G}}$ instantiate the graph adjacencies in Numpy, PyTorch, or PyG, and compute their eigenvalue decompositions. What do you observe? [2 points]
 
 \Solution{
-
+    Their eigenvalues are almost same.
 }
 
 Consider a GIN where all nodes start with the same initial color, i.e., $\mathbf{x}_v^{(0)} = 1$ for all nodes $v\in \mathcal{V}$. This setup is equivalent to having $\mathbf{X}^{(0)} = \mathbf{1}$, where $\mathbf{1}$ denotes the all-one vector. This is the initialization of the WL test. Using the equations in \ref{probelm:eig}, derive the expression for $\mathbf{X}^{(1)}$. [2 points]
 
 \Solution{
-
+    Given the conditions, we have $d_0=1$
+    \begin{align*}
+        \hat{\mathbf{W}}^{(0)}[n,j] &= (\lambda_n+1+\epsilon) \sum_{i=1}^{d_0} \mathbf{W}^{(0)}[i,j] \big\langle \mathbf{v}_n,\;\mathbf{X}^{(0)}[:,i]\big\rangle\\
+        &= (\lambda_n+1+\epsilon) \mathbf{W}^{(0)}[1,j] \big\langle \mathbf{v}_n,\;\mathbf{1}\big\rangle
+    \end{align*}
+    \begin{align*}
+        \mathbf{X}^{(1)}[:,j] &= \sigma\left(\sum_{n=1}^{N}\hat{\mathbf{W}}^{(0)}[n,j] \mathbf{v}_n\right)\\
+        &=\sigma\left(\mathbf{W}^{(0)}[1,j] \sum_{n=1}^{N} (\lambda_n+1+\epsilon) \big\langle \mathbf{v}_n,\;\mathbf{1}\big\rangle \mathbf{v}_n\right)
+    \end{align*}
 }
 
 Observe from your previous result that each column \(\mathbf{X}^{(1)}[:,j]\) is a linear combination of eigenvectors, followed by a pointwise nonlinearity. What is the weight associated with each eigenvector? What factors determine this weight? [2 points]
@@ -80,17 +111,17 @@ Observe from your previous result that each column \(\mathbf{X}^{(1)}[:,j]\) is 
 
 
 \Solution{
-
+    $\mathbf{W}^{(0)}[1,j] (\lambda_n+1+\epsilon) \big\langle \mathbf{v}_n,\;\mathbf{1}\big\rangle$ is the weight associated with each eigenvector. Graph structure and the parameters in the network determine this weight.
 }
 
 Compute the dot product $\langle\mathbf{v}_n,\mathbf{X}^{(0)}\rangle$, for each eigenvector across both graphs. In other words, compute the dot products $c_n=\langle \mathbf{v}_n,\mathbf{1}_N\rangle$ for $\mathcal{G}$ and $\hat{c}_n=\langle \hat{\mathbf{v}}_n,\mathbf{1}_N\rangle$ for $\hat{\mathcal{G}}$. What do you observe? [1 point]
 
 \Solution{
-
+    They are almost same.
 }
 
 What does the previous result suggest about $\mathbf{X}^{(1)}$ for the graphs $\mathcal{G}$ and $\hat{\mathcal{G}}$? [1 point]
 
 \Solution{
-
+$\mathbf{X}^{(1)}$ for the graphs $\mathcal{G}$ and $\hat{\mathcal{G}}$ would be same.
 }

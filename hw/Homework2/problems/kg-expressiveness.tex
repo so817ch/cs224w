@@ -10,12 +10,26 @@ TransE is a common method for learning representations of entities and relations
 \subsection{TransE Modeling [3 points]}
 For each of the above relational patterns, can TransE model it perfectly, such that $h+\ell=t$ for all relations? Explain why or why not. Note that here $\mathbf{0}$ embeddings for relation are undesirable since that means two entities related by that relation are identical and not distinguishable.
 
-\Solution{}
+\Solution{
+    \\
+    \begin{enumerate}
+        \item TransE can't model relation of symmetry, since $$\mathbf{h}+\boldsymbol{\ell}=\mathbf{t}$$ $$\mathbf{t}+\boldsymbol{\ell}=\mathbf{h}+2\boldsymbol{\ell} \neq \mathbf{h}$$
+        \item TransE can model relation of inverse, for example set $\boldsymbol{\ell}_1=-\boldsymbol{\ell}_2$, when $$\mathbf{h}+\boldsymbol{\ell}_1=\mathbf{t}$$ $$\mathbf{t}+\boldsymbol{\ell}_2=\mathbf{h}$$
+        \item TransE can model relation of composition, set $\boldsymbol{\ell}_3=\boldsymbol{\ell}_1+\boldsymbol{\ell}_2$, when $$\mathbf{a}+\boldsymbol{\ell}_1=\mathbf{b}$$ $$\mathbf{b}+\boldsymbol{\ell}_2=\mathbf{c}$$, we have $$\mathbf{a}+\boldsymbol{\ell}_3=\mathbf{c}$$
+    \end{enumerate}
+}
 
 \subsection{RotatE Modeling [3 points]}
 Consider a new model, RotatE. Instead of training embeddings such that $h+\ell \approx t$, we train embeddings such that $h \circ \ell \approx t$. Here $\circ$ means rotation. You can think of $h$ as a vector of dimension $2 d$, representing $d$ $2 \mathrm{D}$ points. $\ell$ is a $d$-dimensional vector specifying rotation angles. When applying $\circ$, For all $i \in 0 \ldots d-1, \left(h_{2 i}, h_{2 i+1}\right)$ is rotated clockwise by $l_i$. Similar to TransE, the entity embeddings are also normalized to L2 norm 1. Can RotatE model the above 3 relation patterns perfectly such that $h \circ \ell = t$ for all relations? Why or why not?
 
-\Solution{}
+\Solution{
+    \\
+    \begin{enumerate}
+        \item RotatE can model relation of symmetry, set $l_i=2k\pi,\enspace k \in \mathbb{Z}$, so $$\mathbf{h}\circ\boldsymbol{\ell}=\mathbf{t}$$ $$\mathbf{t}\circ\boldsymbol{\ell}=\mathbf{h}$$
+        \item RotatE can model relation of inverse, set $l^{(2)}_i=-l^{(1)}_i+ 2k\pi,\enspace k \in \mathbb{Z}$, so $$\mathbf{h}\circ\boldsymbol{\ell}_1=\mathbf{t}$$ $$\mathbf{t}\circ\boldsymbol{\ell}_2=\mathbf{h}$$
+        \item RotatE can model relation of inverse, set $l^{(3)}_i=l^{(1)}_i+l^{(2)}_i+ 2k\pi,\enspace k \in \mathbb{Z}$, when $$\mathbf{a}\circ\boldsymbol{\ell}_1=\mathbf{b}$$ $$\mathbf{b}\circ\boldsymbol{\ell}_2=\mathbf{c}$$, so $$\mathbf{a}\circ\boldsymbol{\ell}_3=\mathbf{c}$$
+    \end{enumerate}
+}
 
 \subsection{Failure Cases [4 points]}
 Give an example of a graph that RotatE cannot model. Can TransE model this graph? Assume that relation embeddings cannot be $\mathbf{0}$ in either model.
